@@ -229,8 +229,6 @@ Patch00: patch-4.%{base_sublevel}-git%{gitrev}.xz
 # we also need compile fixes for -vanilla
 #Patch04: compile-fixes.patch
 
-# build tweak for build ID magic, even for -vanilla
-Patch05: kbuild-AFTER_LINK.patch
 
 %if !%{nopatches}
 # RasperryPi patch
@@ -713,7 +711,6 @@ cd linux-%{KVERREL}
 ApplyPatch %{stable_patch_00}
 %endif
 
-ApplyPatch kbuild-AFTER_LINK.patch
 
 #
 # misc small stuff to make things compile
@@ -1380,6 +1377,8 @@ fi
 #
 # 
 %changelog
+- Drop kbuild-AFTER_LINK.patch as its not used.
+
 * Sat Dec 05 2015 Vaughan <devel at agrez dot net> - 4.2.6-402.806e022
 - Disable NFSv2 support
 - Enable NFSv4_1 & NFSv4_2 support
