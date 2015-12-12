@@ -1381,6 +1381,7 @@ fi
 - Sync patch to git revision: rpi-4.2.y c35cc1fea33fcbaa04ddcd8c9733fd66f6d3e7ad
 - Update to stable kernel patch v4.2.7
 - Drop kbuild-AFTER_LINK.patch as its not used.
+- Add TOUCHSCREEN_FT6236=m
 
 * Sat Dec 05 2015 Vaughan <devel at agrez dot net> - 4.2.6-402.806e022
 - Disable NFSv2 support
