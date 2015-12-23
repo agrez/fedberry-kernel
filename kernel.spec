@@ -192,9 +192,8 @@ Source16: mod-extra.list
 Source17: mod-extra.sh
 Source99: filter-modules.sh
 
-# This file is intentionally left empty in the stock kernel. Its a nicety
-# added for those wanting to do custom rebuilds with altered config opts.
-Source1000: config-bcm2709
+# kernel config modifications 
+Source1000: config-fedberry.cfg
 
 # Sources for kernel-tools
 Source2000: cpupower.service
@@ -807,8 +806,11 @@ BuildKernel() {
 
     # and now to start the build process
     make -s mrproper
-    cp %{SOURCE1000} .config
-
+    make bcm2709_defconfig
+    cp %{SOURCE1000} .
+    # merge kernel config changes 
+    scripts/kconfig/merge_config.sh -m -r .config config-fedberry.cfg
+        
     echo USING ARCH=$Arch
     make ARCH=$Arch .config >/dev/null
     %{make} ARCH=$Arch %{?_smp_mflags} $MakeTarget %{?sparse_mflags} %{?kernel_mflags}
@@ -1377,6 +1379,12 @@ fi
 #
 # 
 %changelog
+- Split out config modifications to config-fedberry.cfg
+- Apply config 'fragments' (config-fedberry.cfg) at build time using 'merge_config.sh'
+- Drop config-bcm2709
+- Enable PREEMPT_VOLUNTARY
+- Refactor kernel config
+
 * Sat Dec 12 2015 Vaughan <devel at agrez dot net> - 4.2.7-400.c35cc1f
 - Sync patch to git revision: rpi-4.2.y c35cc1fea33fcbaa04ddcd8c9733fd66f6d3e7ad
 - Update to stable kernel patch v4.2.7
