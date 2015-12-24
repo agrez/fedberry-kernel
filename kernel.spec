@@ -6,7 +6,7 @@
 # be 0.
 %global released_kernel 1
 
-%define gitshort c35cc1f
+%define gitshort e0103e9
 %define buildid .%{gitshort}.bcm2709
 
 # baserelease defines which build revision of this kernel version we're
@@ -37,7 +37,7 @@
 %if 0%{?released_kernel}
 
 # Do we have a -stable update to apply?
-%define stable_update 7
+%define stable_update 8
 # Set rpm version accordingly
 %if 0%{?stable_update}
 %define stablerev %{stable_update}
@@ -231,7 +231,7 @@ Patch00: patch-4.%{base_sublevel}-git%{gitrev}.xz
 
 %if !%{nopatches}
 # RasperryPi patch
-Patch100: patch-linux-rpi-4.2.7-c35cc1f.xz
+Patch100: patch-linux-rpi-4.2.8-e0103e9.xz
 
 # END OF PATCH DEFINITIONS
 
@@ -1379,6 +1379,9 @@ fi
 #
 # 
 %changelog
+* Wed Dec 23 2015 Vaughan <devel at agrez dot net> - 4.2.8-400.e0103e9
+- Update to stable kernel patch v4.2.8
+- Sync patch to git revision: rpi-4.2.y e0103e9645caca6576c1b6c21608c28015857ab8
 - Split out config modifications to config-fedberry.cfg
 - Apply config 'fragments' (config-fedberry.cfg) at build time using 'merge_config.sh'
 - Drop config-bcm2709
