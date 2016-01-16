@@ -6,7 +6,7 @@
 # be 0.
 %global released_kernel 1
 
-%define gitshort e0103e9
+%define gitshort 9bc62df
 %define buildid .%{gitshort}.bcm2709
 
 # baserelease defines which build revision of this kernel version we're
@@ -25,7 +25,7 @@
 # For non-released -rc kernels, this will be appended after the rcX and
 # gitX tags, so a 3 here would become part of release "0.rcX.gitX.3"
 #
-%global baserelease 400
+%global baserelease 401
 %global fedora_build %{baserelease}
 
 # base_sublevel is the kernel version we're starting with and patching
@@ -231,7 +231,7 @@ Patch00: patch-4.%{base_sublevel}-git%{gitrev}.xz
 
 %if !%{nopatches}
 # RasperryPi patch
-Patch100: patch-linux-rpi-4.2.8-e0103e9.xz
+Patch100: patch-linux-rpi-4.2.8-9bc62df.xz
 
 # END OF PATCH DEFINITIONS
 
@@ -1379,6 +1379,9 @@ fi
 #
 # 
 %changelog
+* Sat Jan 16 2015 Vaughan <devel at agrez dot net> - 4.2.8-401.9bc62df
+- Sync patch to git revision: rpi-4.2.y 9bc62dfed34a0dd57480f93a207ff3eb05eed8d4
+
 * Wed Dec 23 2015 Vaughan <devel at agrez dot net> - 4.2.8-400.e0103e9
 - Update to stable kernel patch v4.2.8
 - Sync patch to git revision: rpi-4.2.y e0103e9645caca6576c1b6c21608c28015857ab8
