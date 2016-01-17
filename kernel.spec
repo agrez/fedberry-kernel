@@ -6,7 +6,7 @@
 # be 0.
 %global released_kernel 1
 
-%define gitshort e0103e9
+%define gitshort 547120c
 %define buildid .%{gitshort}.bcm2709
 
 # baserelease defines which build revision of this kernel version we're
@@ -31,13 +31,13 @@
 # base_sublevel is the kernel version we're starting with and patching
 # on top of -- for example, 3.1-rc7-git1 starts with a 3.0 base,
 # which yields a base_sublevel of 0.
-%define base_sublevel 2
+%define base_sublevel 3
 
 ## If this is a released kernel ##
 %if 0%{?released_kernel}
 
 # Do we have a -stable update to apply?
-%define stable_update 8
+%define stable_update 3
 # Set rpm version accordingly
 %if 0%{?stable_update}
 %define stablerev %{stable_update}
@@ -231,7 +231,7 @@ Patch00: patch-4.%{base_sublevel}-git%{gitrev}.xz
 
 %if !%{nopatches}
 # RasperryPi patch
-Patch100: patch-linux-rpi-4.2.8-e0103e9.xz
+Patch100: patch-linux-rpi-4.3.3-547120c.xz
 
 # END OF PATCH DEFINITIONS
 
@@ -1273,6 +1273,7 @@ fi
 %{_libdir}/traceevent/plugins/*
 %dir %{_libexecdir}/perf-core
 %{_libexecdir}/perf-core/*
+%{_datadir}/perf-core/*
 %{_mandir}/man[1-8]/perf*
 %{_sysconfdir}/bash_completion.d/perf
 %doc linux-%{KVERREL}/tools/perf/Documentation/examples.txt
@@ -1379,6 +1380,11 @@ fi
 #
 # 
 %changelog
+* Sat Jan 16 2016 Vaughan <devel at agrez dot net> - 4.3.3-400.547120c
+- Rebase to 4.3.y kernel branch
+- Update to stable kernel patch v4.3.3
+- Sync patch to git revision: rpi-4.3.y 547120c6be9054cd4b7186aee95c6e698f839d44
+
 * Wed Dec 23 2015 Vaughan <devel at agrez dot net> - 4.2.8-400.e0103e9
 - Update to stable kernel patch v4.2.8
 - Sync patch to git revision: rpi-4.2.y e0103e9645caca6576c1b6c21608c28015857ab8
