@@ -1379,7 +1379,7 @@ fi
 #
 # 
 %changelog
-* Sat Jan 16 2015 Vaughan <devel at agrez dot net> - 4.2.8-401.9bc62df
+* Sat Jan 16 2016 Vaughan <devel at agrez dot net> - 4.2.8-401.9bc62df
 - Sync patch to git revision: rpi-4.2.y 9bc62dfed34a0dd57480f93a207ff3eb05eed8d4
 
 * Wed Dec 23 2015 Vaughan <devel at agrez dot net> - 4.2.8-400.e0103e9
