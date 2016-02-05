@@ -6,7 +6,7 @@
 # be 0.
 %global released_kernel 1
 
-%define gitshort af168f2
+%define gitshort 4dee941
 %define buildid .%{gitshort}.bcm2709
 
 # baserelease defines which build revision of this kernel version we're
@@ -37,7 +37,7 @@
 %if 0%{?released_kernel}
 
 # Do we have a -stable update to apply?
-%define stable_update 5
+%define stable_update 4
 # Set rpm version accordingly
 %if 0%{?stable_update}
 %define stablerev %{stable_update}
@@ -231,7 +231,7 @@ Patch00: patch-4.%{base_sublevel}-git%{gitrev}.xz
 
 %if !%{nopatches}
 # RasperryPi patch
-Patch100: patch-linux-rpi-4.3.5-af168f2.xz
+Patch100: patch-linux-rpi-4.3.4-4dee941.xz
 
 # END OF PATCH DEFINITIONS
 
@@ -1380,10 +1380,6 @@ fi
 #
 # 
 %changelog
-* Fri Feb 05 2016 Vaughan <devel at agrez dot net> - 4.3.5-400.af168f2
-- Update to stable kernel patch v4.3.5
-- Sync rpi patch to git revision: rpi-4.3.y af168f2cd81ee653af2e1a0839e86d542fc73bf8
-
 * Sun Jan 24 2016 Vaughan <devel at agrez dot net> - 4.3.4-400.4dee941
 - Update to stable kernel patch v4.3.4
 - Sync rpi patch to git revision: rpi-4.3.y 4dee9412d72abd346c9b7a3bbd8e96a5f0b163f3
