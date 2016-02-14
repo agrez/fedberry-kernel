@@ -6,7 +6,7 @@
 # be 0.
 %global released_kernel 1
 
-%define gitshort 065d2a9
+%define gitshort 52d3149
 %define buildid .%{gitshort}.bcm2709
 
 # baserelease defines which build revision of this kernel version we're
@@ -25,7 +25,7 @@
 # For non-released -rc kernels, this will be appended after the rcX and
 # gitX tags, so a 3 here would become part of release "0.rcX.gitX.3"
 #
-%global baserelease 400
+%global baserelease 401
 %global fedora_build %{baserelease}
 
 # base_sublevel is the kernel version we're starting with and patching
@@ -231,7 +231,7 @@ Patch00: patch-4.%{base_sublevel}-git%{gitrev}.xz
 
 %if !%{nopatches}
 # RasperryPi patch
-Patch100: patch-linux-rpi-4.4.1-065d2a9.xz
+Patch100: patch-linux-rpi-4.4.1-52d3149.xz
 
 # END OF PATCH DEFINITIONS
 
@@ -1380,6 +1380,10 @@ fi
 #
 # 
 %changelog
+* Sun Feb 14 2016 Vaughan <devel at agrez dot net> - 4.4.1-401.52d3149
+- Sync patch to RPi git revision: rpi-4.4.y 52d3149aba3c684db1b6c739ca794dc330d92929
+  This includes the significant revision of the bcm2835-sdhost driver
+
 * Tue Feb 09 2016 Vaughan <devel at agrez dot net> - 4.4.1-400.065d2a9
 - Rebase to 4.4.y kernel branch
 - Update to stable kernel patch v4.4.1
