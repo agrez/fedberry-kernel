@@ -6,7 +6,7 @@
 # be 0.
 %global released_kernel 1
 
-%define gitshort af168f2
+%define gitshort 0a5be76
 %define buildid .%{gitshort}.bcm2709
 
 # baserelease defines which build revision of this kernel version we're
@@ -37,7 +37,7 @@
 %if 0%{?released_kernel}
 
 # Do we have a -stable update to apply?
-%define stable_update 5
+%define stable_update 6
 # Set rpm version accordingly
 %if 0%{?stable_update}
 %define stablerev %{stable_update}
@@ -231,7 +231,7 @@ Patch00: patch-4.%{base_sublevel}-git%{gitrev}.xz
 
 %if !%{nopatches}
 # RasperryPi patch
-Patch100: patch-linux-rpi-4.3.5-af168f2.xz
+Patch100: patch-linux-rpi-4.3.6-0a5be76.xz
 
 # END OF PATCH DEFINITIONS
 
@@ -1380,6 +1380,11 @@ fi
 #
 # 
 %changelog
+* Sat Feb 20 2016 Vaughan <devel at agrez dot net> - 4.3.6-400.0a5be76
+- Update to stable kernel patch v4.3.6
+- Sync rpi patch to git revision: rpi-4.3.y 0a5be768231fd98350dd869e52f8adfed064c7b0
+  This includes the significant revision of the bcm2835-sdhost driver
+
 * Fri Feb 05 2016 Vaughan <devel at agrez dot net> - 4.3.5-400.af168f2
 - Update to stable kernel patch v4.3.5
 - Sync rpi patch to git revision: rpi-4.3.y af168f2cd81ee653af2e1a0839e86d542fc73bf8
