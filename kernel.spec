@@ -6,7 +6,7 @@
 # be 0.
 %global released_kernel 1
 
-%define gitshort 36babd8
+%define gitshort c5cbb66
 %define buildid .%{gitshort}.bcm2709
 
 # baserelease defines which build revision of this kernel version we're
@@ -25,7 +25,7 @@
 # For non-released -rc kernels, this will be appended after the rcX and
 # gitX tags, so a 3 here would become part of release "0.rcX.gitX.3"
 #
-%global baserelease 401
+%global baserelease 400
 %global fedora_build %{baserelease}
 
 # base_sublevel is the kernel version we're starting with and patching
@@ -37,7 +37,7 @@
 %if 0%{?released_kernel}
 
 # Do we have a -stable update to apply?
-%define stable_update 3
+%define stable_update 4
 # Set rpm version accordingly
 %if 0%{?stable_update}
 %define stablerev %{stable_update}
@@ -56,7 +56,7 @@
 # Set rpm version accordingly
 %define rpmversion 4.%{upstream_sublevel}.0
 %endif
-# Nb: The above rcrev and gitrev values automagically define Patch00 and Patch01 below.
+# Nb: The above rcrev and gitrev values automagically define Source1 and Source2 below.
 
 # What parts do we want to build?  We must build at least one kernel.
 # These are the kernels that are built IF the architecture allows it.
@@ -204,8 +204,7 @@ Source2001: cpupower.config
 # For a stable release kernel
 %if 0%{?stable_update}
 %if 0%{?stable_base}
-%define    stable_patch_00  patch-4.%{base_sublevel}.%{stable_base}.xz
-Patch00: %{stable_patch_00}
+Source1: ftp://ftp.kernel.org/pub/linux/kernel/v4.x/patch-4.%{base_sublevel}.%{stable_base}.xz
 %endif
 
 # non-released_kernel case
@@ -213,14 +212,14 @@ Patch00: %{stable_patch_00}
 # near the top of this spec file.
 %else
 %if 0%{?rcrev}
-Patch00 patch-4.%{upstream_sublevel}-rc%{rcrev}.xz
+Source1: ftp://ftp.kernel.org/pub/linux/kernel/v4.x/patch-4.%{upstream_sublevel}-rc%{rcrev}.xz
 %if 0%{?gitrev}
-Patch01: patch-4.%{upstream_sublevel}-rc%{rcrev}-git%{gitrev}.xz
+Source2: ftp://ftp.kernel.org/pub/linux/kernel/v4.x/patch-4.%{upstream_sublevel}-rc%{rcrev}-git%{gitrev}.xz
 %endif
 %else
 # pre-{base_sublevel+1}-rc1 case
 %if 0%{?gitrev}
-Patch00: patch-4.%{base_sublevel}-git%{gitrev}.xz
+Source1: ftp://ftp.kernel.org/pub/linux/kernel/v4.x/patch-4.%{base_sublevel}-git%{gitrev}.xz
 %endif
 %endif
 %endif
@@ -231,7 +230,7 @@ Patch00: patch-4.%{base_sublevel}-git%{gitrev}.xz
 
 %if !%{nopatches}
 # RasperryPi patch
-Patch100: patch-linux-rpi-4.4.3-36babd8.xz
+Patch100: patch-linux-rpi-4.4.4-c5cbb66.xz
 
 # END OF PATCH DEFINITIONS
 
@@ -676,14 +675,14 @@ if [ ! -d kernel-%{kversion}%{?dist}/vanilla-%{vanillaversion} ]; then
 # Update vanilla to the latest upstream.
 # (non-released_kernel case only)
 %if 0%{?rcrev}
-#    ApplyPatch patch-4.%{upstream_sublevel}-rc%{rcrev}.xz
+    xzcat %{SOURCE1} | patch -p1 -F1 -s
 %if 0%{?gitrev}
-    ApplyPatch patch-4.%{upstream_sublevel}-rc%{rcrev}-git%{gitrev}.xz
+    xzcat %{SOURCE2} | patch -p1 -F1 -s
 %endif
 %else
 # pre-{base_sublevel+1}-rc1 case
 %if 0%{?gitrev}
-    ApplyPatch patch-4.%{base_sublevel}-git%{gitrev}.xz
+    xzcat %{SOURCE1} | patch -p1 -F1 -s
 %endif
 %endif
 
@@ -707,9 +706,9 @@ cd linux-%{KVERREL}
 
 # released_kernel with possible stable updates
 %if 0%{?stable_base}
-ApplyPatch %{stable_patch_00}
+# This is special because the kernel spec is HELL and nothing is consistent
+xzcat %{SOURCE1} | patch -p1 -F1 -s
 %endif
-
 
 #
 # misc small stuff to make things compile
@@ -1381,6 +1380,11 @@ fi
 #
 # 
 %changelog
+* Mon Mar 07 2016 Vaughan <devel at agrez dot net> - 4.4.4-400.c5cbb66
+- Sync RPi patch to git revision: rpi-4.4.y c5cbb66686e7e289e8a7aff49a954f86893e628d
+- Stable kernel.org patch now referenced as a Source1
+- Stable patch now applied directly instead of using ApplyPatch() function
+
 * Wed Mar 02 2016 Vaughan <devel at agrez dot net> - 4.4.3-401.36babd8
 - Sync patch to RPi git revision: rpi-4.4.y 36babd89241c85258acebe06616f1f1a58356f8e
 - Add RPi 3 Model B support (bcm2710)
